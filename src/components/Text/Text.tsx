@@ -50,6 +50,9 @@ export const Text = React.memo(({ frame, content, defaultContent, everyRow }: Te
       const data = dataframeView.data.fields.reduce((out, { config, name, values }) => {
         values.toArray().forEach((v, i) => {
           out[i] = { ...out[i], [config.displayName || name]: v }
+      const data = dataframeView.data.fields.reduce((out, { config, name, values }) => {
+        values.toArray().forEach((v, i) => {
+          out[i] = { ...out[i], [config.displayName || name]: v };
         });
         return out;
       }, []);
@@ -60,10 +63,7 @@ export const Text = React.memo(({ frame, content, defaultContent, everyRow }: Te
           );
         })
       ) : (
-        <div
-          className={styles.frame}
-          dangerouslySetInnerHTML={{ __html: generateHtml({ data }, content) }}
-        />
+        <div className={styles.frame} dangerouslySetInnerHTML={{ __html: generateHtml({ data }, content) }} />
       );
     } else {
       /**
