@@ -1,3 +1,6 @@
+import { DataFrame, GrafanaTheme, textUtil } from '@grafana/data';
+import { InfoBox, useTheme } from '@grafana/ui';
+import { css } from 'emotion';
 import Handlebars from 'handlebars';
 import MarkdownIt from 'markdown-it';
 import React from 'react';
@@ -42,20 +45,12 @@ export const Text = React.memo(({ frame, content, defaultContent, everyRow }: Te
      * Frame returned
      */
     if (frame?.length) {
-      const dataframeView = new DataFrameView(frame);
-
-      /**
-       * Content
-       */
-      const data = dataframeView.data.fields.reduce((out, { config, name, values }) => {
-        values.toArray().forEach((v, i) => {
-          out[i] = { ...out[i], [config.displayName || name]: v }
-      const data = dataframeView.data.fields.reduce((out, { config, name, values }) => {
+      const data = frame.fields.reduce((out, { config, name, values }) => {
         values.toArray().forEach((v, i) => {
           out[i] = { ...out[i], [config.displayName || name]: v };
         });
         return out;
-      }, []);
+      }, [] as Array<Record<string, any>>);
       renderedContent = everyRow ? (
         data.map((row, key) => {
           return (
