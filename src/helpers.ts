@@ -71,6 +71,26 @@ const not = (left: boolean): boolean => {
   return !left;
 };
 
+const keys = (left: any): any[] => {
+  return Object.keys(left);
+};
+
+const values = (left: any): any[] => {
+  return Object.values(left);
+};
+
+const entries = (left: any): Array<[string, any]> => {
+  return Object.entries(left);
+};
+
+const json_stringify = (left: any): string => {
+  return JSON.stringify(left);
+};
+
+const json_parse = (left: string): any => {
+  return JSON.parse(left || '{}');
+};
+
 export const registerHelpers = (handlebars: any) => {
   handlebars.registerHelper('date', date);
   handlebars.registerHelper('toFixed', toFixed);
@@ -86,4 +106,9 @@ export const registerHelpers = (handlebars: any) => {
   handlebars.registerHelper('and', and);
   handlebars.registerHelper('or', or);
   handlebars.registerHelper('not', not);
+  handlebars.registerHelper('keys', keys);
+  handlebars.registerHelper('values', values);
+  handlebars.registerHelper('entries', entries);
+  handlebars.registerHelper('json_stringify', json_stringify);
+  handlebars.registerHelper('json_parse', json_parse);
 };
