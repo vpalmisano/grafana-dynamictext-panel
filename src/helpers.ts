@@ -91,6 +91,14 @@ const json_parse = (left: string): any => {
   return JSON.parse(left || '{}');
 };
 
+const _parseInt = (left: string, right = 10): number => {
+  return parseInt(left, right);
+};
+
+const date_iso = (left: number | string): string => {
+  return new Date(left).toISOString();
+};
+
 export const registerHelpers = (handlebars: any) => {
   handlebars.registerHelper('date', date);
   handlebars.registerHelper('toFixed', toFixed);
@@ -111,4 +119,6 @@ export const registerHelpers = (handlebars: any) => {
   handlebars.registerHelper('entries', entries);
   handlebars.registerHelper('json_stringify', json_stringify);
   handlebars.registerHelper('json_parse', json_parse);
+  handlebars.registerHelper('parseInt', _parseInt);
+  handlebars.registerHelper('date_iso', date_iso);
 };
