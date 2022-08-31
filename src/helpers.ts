@@ -35,6 +35,10 @@ const contains = (arr: string[], value: string): boolean => {
   return arr.indexOf(value) !== -1;
 };
 
+const indexOf = (arr: string[], value: string): number => {
+  return arr.indexOf(value);
+};
+
 const eq = (left: string, right: string): boolean => {
   return left === right;
 };
@@ -105,6 +109,7 @@ export const registerHelpers = (handlebars: any) => {
   handlebars.registerHelper('variable', variable);
   handlebars.registerHelper('join', join);
   handlebars.registerHelper('contains', contains);
+  handlebars.registerHelper('indexOf', indexOf);
   handlebars.registerHelper('eq', eq);
   handlebars.registerHelper('unlessEq', unlessEq);
   handlebars.registerHelper('gt', gt);
