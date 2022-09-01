@@ -1,6 +1,7 @@
 name: Release
 
 on:
+  workflow_dispatch:
   push:
     tags:
       - 'v*.*.*' # Run workflow on version tags, e.g. v1.0.0.
@@ -76,7 +77,7 @@ jobs:
           args: buildAll
 
       - name: Sign plugin
-        run: yarn sign
+        run: yarn sign --rootUrls ${{ secrets.GRAFANA_SIGN_URLS }}
         env:
           GRAFANA_API_KEY: ${{ secrets.GRAFANA_API_KEY }} # Requires a Grafana API key from Grafana.com.
 
