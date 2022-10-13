@@ -103,6 +103,13 @@ const date_iso = (left: number | string): string => {
   return new Date(left).toISOString();
 };
 
+const url_property = (
+  url: string,
+  property: 'hash' | 'host' | 'origin' | 'pathname' | 'port' | 'protocol' | 'search'
+): string => {
+  return new URL(url)[property];
+};
+
 export const registerHelpers = (handlebars: any) => {
   handlebars.registerHelper('date', date);
   handlebars.registerHelper('toFixed', toFixed);
@@ -126,4 +133,5 @@ export const registerHelpers = (handlebars: any) => {
   handlebars.registerHelper('json_parse', json_parse);
   handlebars.registerHelper('parseInt', _parseInt);
   handlebars.registerHelper('date_iso', date_iso);
+  handlebars.registerHelper('url_property', url_property);
 };

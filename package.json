@@ -11,7 +11,9 @@
     "test": "grafana-toolkit plugin:test",
     "dev": "grafana-toolkit plugin:dev",
     "watch": "grafana-toolkit plugin:dev --watch",
-    "sign": "grafana-toolkit plugin:sign"
+    "sign": "grafana-toolkit plugin:sign",
+    "lint": "prettier --check src",
+    "lint:fix": "prettier --write src"
   },
   "homepage": "https://grafana.com/plugins/marcusolsson-dynamictext-panel",
   "bugs": "https://github.com/marcusolsson/grafana-dynamictext-panel/issues",
@@ -36,7 +38,8 @@
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^12.0.0",
     "@types/markdown-it": "^12.0.1",
-    "emotion": "10.0.27"
+    "emotion": "10.0.27",
+    "prettier": "^2.7.1"
   },
   "engines": {
     "node": ">=14"
