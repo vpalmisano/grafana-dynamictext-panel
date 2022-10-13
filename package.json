@@ -13,7 +13,8 @@
     "watch": "grafana-toolkit plugin:dev --watch",
     "sign": "grafana-toolkit plugin:sign",
     "lint": "prettier --check src",
-    "lint:fix": "prettier --write src"
+    "lint:fix": "prettier --write src",
+    "package": "yarn build && mv dist marcusolsson-dynamictext-panel && zip marcusolsson-dynamictext-panel-1.9.0-custom.zip marcusolsson-dynamictext-panel -r && rm -rf marcusolsson-dynamictext-panel"
   },
   "homepage": "https://grafana.com/plugins/marcusolsson-dynamictext-panel",
   "bugs": "https://github.com/marcusolsson/grafana-dynamictext-panel/issues",
