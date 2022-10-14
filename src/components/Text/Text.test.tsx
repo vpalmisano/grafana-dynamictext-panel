@@ -24,28 +24,7 @@ describe('<Text />', () => {
     const ageData: number[] = [42, 38];
     const props: TextProps = {
       frame: {
-        fields: [
-          {
-            name: 'name',
-            type: FieldType.string,
-            config: {},
-            values: {
-              length: 2,
-              get: (index) => nameData[index],
-              toArray: () => nameData,
-            },
-          },
-          {
-            name: 'age',
-            type: FieldType.number,
-            config: {},
-            values: {
-              length: 2,
-              get: (index) => ageData[index],
-              toArray: () => ageData,
-            },
-          },
-        ],
+        fields: [],
         length: 2,
       },
       content: 'Test content',
