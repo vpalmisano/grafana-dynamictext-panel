@@ -110,6 +110,17 @@ const url_property = (
   return new URL(url)[property];
 };
 
+const array_filter = (data: any[], prop: string, value: any): any => {
+  return data.filter((obj) => {
+    const objProp = obj[prop];
+    if (Array.isArray(objProp)) {
+      return (objProp as any[]).includes(value);
+    } else {
+      return objProp === value;
+    }
+  });
+};
+
 export const registerHelpers = (handlebars: any) => {
   handlebars.registerHelper('date', date);
   handlebars.registerHelper('toFixed', toFixed);
@@ -134,4 +145,5 @@ export const registerHelpers = (handlebars: any) => {
   handlebars.registerHelper('parseInt', _parseInt);
   handlebars.registerHelper('date_iso', date_iso);
   handlebars.registerHelper('url_property', url_property);
+  handlebars.registerHelper('array_filter', array_filter);
 };
