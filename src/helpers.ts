@@ -125,6 +125,18 @@ const array_sum = (array: number[]): number => {
   return array.reduce((prev, cur) => prev + cur, 0);
 };
 
+const format_duration = (ms: number): string => {
+  return new Date(ms)
+    .toLocaleTimeString('en-GB', {
+      timeZone: 'Etc/UTC',
+      hour12: false,
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+    })
+    .toString();
+};
+
 export const registerHelpers = (handlebars: any) => {
   handlebars.registerHelper('date', date);
   handlebars.registerHelper('toFixed', toFixed);
@@ -151,4 +163,5 @@ export const registerHelpers = (handlebars: any) => {
   handlebars.registerHelper('url_property', url_property);
   handlebars.registerHelper('array_filter', array_filter);
   handlebars.registerHelper('array_sum', array_sum);
+  handlebars.registerHelper('format_duration', format_duration);
 };
