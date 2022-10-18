@@ -121,6 +121,10 @@ const array_filter = (data: any[], prop: string, value: any): any => {
   });
 };
 
+const array_sum = (array: number[]): number => {
+  return array.reduce((prev, cur) => prev + cur, 0);
+};
+
 export const registerHelpers = (handlebars: any) => {
   handlebars.registerHelper('date', date);
   handlebars.registerHelper('toFixed', toFixed);
@@ -146,4 +150,5 @@ export const registerHelpers = (handlebars: any) => {
   handlebars.registerHelper('date_iso', date_iso);
   handlebars.registerHelper('url_property', url_property);
   handlebars.registerHelper('array_filter', array_filter);
+  handlebars.registerHelper('array_sum', array_sum);
 };
