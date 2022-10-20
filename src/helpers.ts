@@ -110,6 +110,19 @@ const url_property = (
   return new URL(url)[property];
 };
 
+const array_sort = (data: any[], prop: string, direction: string): any => {
+  return data.sort((a, b) => {
+    const v1 = a[prop] || 0;
+    const v2 = b[prop] || 0;
+    const dir = direction === 'desc' ? -1 : 1;
+    if (typeof v1 === 'number') {
+      return dir * (v1 - v2);
+    } else {
+      return dir * (v1 as string).localeCompare(v2 as string);
+    }
+  });
+};
+
 const array_filter = (data: any[], prop: string, value: any): any => {
   return data.filter((obj) => {
     const objProp = obj[prop];
@@ -161,6 +174,7 @@ export const registerHelpers = (handlebars: any) => {
   handlebars.registerHelper('parseInt', _parseInt);
   handlebars.registerHelper('date_iso', date_iso);
   handlebars.registerHelper('url_property', url_property);
+  handlebars.registerHelper('array_sort', array_sort);
   handlebars.registerHelper('array_filter', array_filter);
   handlebars.registerHelper('array_sum', array_sum);
   handlebars.registerHelper('format_duration', format_duration);
