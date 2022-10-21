@@ -1,4 +1,5 @@
 import { getTemplateSrv } from '@grafana/runtime';
+import { HelperOptions } from 'handlebars';
 
 const date = require('helper-date');
 
@@ -150,7 +151,30 @@ const format_duration = (ms: number): string => {
     .toString();
 };
 
-export const registerHelpers = (handlebars: any) => {
+const assign_variable = (name: string, value: any, options: HelperOptions): void => {
+  if (!options.data.root) {
+    options.data.root = {};
+  }
+  options.data.root[name] = value;
+};
+
+const sum = (v1: number, v2: number): number => {
+  return v1 + v2;
+};
+
+const subtract = (v1: number, v2: number): number => {
+  return v1 - v2;
+};
+
+const multiply = (v1: number, v2: number): number => {
+  return v1 * v2;
+};
+
+const divide = (v1: number, v2: number): number => {
+  return v1 / v2;
+};
+
+export const registerHelpers = (handlebars: typeof Handlebars) => {
   handlebars.registerHelper('date', date);
   handlebars.registerHelper('toFixed', toFixed);
   handlebars.registerHelper('variable', variable);
@@ -178,4 +202,9 @@ export const registerHelpers = (handlebars: any) => {
   handlebars.registerHelper('array_filter', array_filter);
   handlebars.registerHelper('array_sum', array_sum);
   handlebars.registerHelper('format_duration', format_duration);
+  handlebars.registerHelper('assign_variable', assign_variable);
+  handlebars.registerHelper('sum', sum);
+  handlebars.registerHelper('subtract', subtract);
+  handlebars.registerHelper('multiply', multiply);
+  handlebars.registerHelper('divide', divide);
 };
