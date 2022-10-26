@@ -139,6 +139,14 @@ const array_sum = (array: number[]): number => {
   return array.reduce((prev, cur) => prev + cur, 0);
 };
 
+const array_min = (array: number[]): number => {
+  return Math.min(...array);
+};
+
+const array_max = (array: number[]): number => {
+  return Math.max(...array);
+};
+
 const format_duration = (ms: number): string => {
   return new Date(ms)
     .toLocaleTimeString('en-GB', {
@@ -201,6 +209,8 @@ export const registerHelpers = (handlebars: typeof Handlebars) => {
   handlebars.registerHelper('array_sort', array_sort);
   handlebars.registerHelper('array_filter', array_filter);
   handlebars.registerHelper('array_sum', array_sum);
+  handlebars.registerHelper('array_min', array_min);
+  handlebars.registerHelper('array_max', array_max);
   handlebars.registerHelper('format_duration', format_duration);
   handlebars.registerHelper('assign_variable', assign_variable);
   handlebars.registerHelper('sum', sum);
