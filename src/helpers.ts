@@ -1,5 +1,6 @@
 import { getTemplateSrv } from '@grafana/runtime';
 import { HelperOptions } from 'handlebars';
+import * as rison from 'rison';
 
 const date = require('helper-date');
 
@@ -182,6 +183,41 @@ const divide = (v1: number, v2: number): number => {
   return v1 / v2;
 };
 
+const strings_join = (s1: string, s2: string, sep = ''): string => {
+  return [s1, s2].join(sep);
+};
+
+const kibana_url = (baseUrl: string, from: number, to: number, index: string, query: string): string => {
+  const startDate = new Date(from).toISOString();
+  const endDate = new Date(to).toISOString();
+  const _g = {
+    filters: [],
+    refreshInterval: {
+      pause: true,
+      value: 0,
+    },
+    time: {
+      from: startDate,
+      to: endDate,
+    },
+  };
+  const filters = query.split(',').map((q) => {
+    const [k, v] = q.split('=', 2);
+    return {
+      $state: { store: 'appState' },
+      query: { match_phrase: { [k]: v } },
+    };
+  });
+  const _a = {
+    filters,
+    index,
+    interval: 'auto',
+    query: { language: 'kuery', query: '' },
+    sort: [['timestamp', 'desc']],
+  };
+  return `${baseUrl}?_g=${rison.encode(_g)}&_a=${rison.encode(_a)}`;
+};
+
 export const registerHelpers = (handlebars: typeof Handlebars) => {
   handlebars.registerHelper('date', date);
   handlebars.registerHelper('toFixed', toFixed);
@@ -217,4 +253,6 @@ export const registerHelpers = (handlebars: typeof Handlebars) => {
   handlebars.registerHelper('subtract', subtract);
   handlebars.registerHelper('multiply', multiply);
   handlebars.registerHelper('divide', divide);
+  handlebars.registerHelper('strings_join', strings_join);
+  handlebars.registerHelper('kibana_url', kibana_url);
 };
