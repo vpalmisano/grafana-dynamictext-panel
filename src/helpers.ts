@@ -89,8 +89,8 @@ const entries = (left: any): Array<[string, any]> => {
   return Object.entries(left);
 };
 
-const json_stringify = (left: any): string => {
-  return JSON.stringify(left);
+const json_stringify = (left: any, space = 0): string => {
+  return JSON.stringify(left, null, space);
 };
 
 const json_parse = (left: string): any => {

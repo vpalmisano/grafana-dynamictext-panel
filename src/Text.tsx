@@ -1,4 +1,4 @@
-import { DataFrame, GrafanaTheme, textUtil } from '@grafana/data';
+import { GrafanaTheme, PanelData, textUtil } from '@grafana/data';
 import { InfoBox, useTheme } from '@grafana/ui';
 import { css } from 'emotion';
 import Handlebars from 'handlebars';
@@ -9,33 +9,36 @@ import { registerHelpers } from './helpers';
 registerHelpers(Handlebars);
 
 export interface TextProps {
-  frame?: DataFrame;
+  data: PanelData;
+  code: string;
   content: string;
   defaultContent: string;
-  everyRow: boolean;
 }
 
-export const Text = React.memo(({ frame, content, defaultContent, everyRow }: TextProps) => {
+export const Text = React.memo(({ data: panelData, code, content, defaultContent }: TextProps) => {
   const theme = useTheme();
   const styles = getStyles(theme);
 
   try {
     let renderedContent;
-    if (frame?.length) {
-      const data = frame.fields.reduce((out, { config, name, values }) => {
-        values.toArray().forEach((v, i) => {
-          out[i] = { ...out[i], [config.displayName || name]: v };
-        });
-        return out;
-      }, [] as Array<Record<string, any>>);
-      renderedContent = everyRow ? (
-        data.map((row, key) => {
-          return (
-            <div key={key} className={styles.frame} dangerouslySetInnerHTML={{ __html: generateHtml(row, content) }} />
-          );
-        })
-      ) : (
-        <div className={styles.frame} dangerouslySetInnerHTML={{ __html: generateHtml({ data }, content) }} />
+    if (panelData.series?.length) {
+      let data: Record<string, any> = {};
+      panelData.series.forEach((s, i) => {
+        data[s.refId || `${i}`] = s.fields.reduce((out, { config, name, values }) => {
+          values.toArray().forEach((v, i) => {
+            out[i] = { ...out[i], [config.displayName || name]: v };
+          });
+          return out;
+        }, [] as Array<Record<string, any>>);
+      });
+      if (code) {
+        const f = new Function('data,panelData', code);
+        data = f(data, panelData) as Record<string, any>;
+      } else {
+        data = { data: Object.values(data)[0] };
+      }
+      renderedContent = (
+        <div className={styles.frame} dangerouslySetInnerHTML={{ __html: generateHtml(data, content) }} />
       );
     } else {
       renderedContent = (

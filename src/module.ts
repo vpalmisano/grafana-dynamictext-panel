@@ -7,6 +7,19 @@ import { PanelOptionCode } from './PanelOptionCode';
 export const plugin = new PanelPlugin<TextOptions>(TextPanel).setNoPadding().setPanelOptions((builder) => {
   return builder
     .addCustomEditor({
+      id: 'code',
+      path: 'code',
+      name: 'Code',
+      description:
+        'Allows to define a script for processing the data. It receives the `data` and `panelData` variables.',
+      editor: PanelOptionCode,
+      settings: {
+        language: 'javascript',
+        height: '50vh',
+      },
+      defaultValue: '',
+    })
+    .addCustomEditor({
       id: 'content',
       path: 'content',
       name: 'Content',
@@ -29,10 +42,5 @@ export const plugin = new PanelPlugin<TextOptions>(TextPanel).setNoPadding().set
         height: '20vh',
       },
       defaultValue: "The query didn't return any results.",
-    })
-    .addBooleanSwitch({
-      path: 'everyRow',
-      name: 'Render template for every row',
-      defaultValue: true,
     });
 });
