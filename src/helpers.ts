@@ -201,21 +201,33 @@ const kibana_url = (baseUrl: string, from: number, to: number, index: string, qu
       to: endDate,
     },
   };
+  const _a = {
+    discover: {
+      columns: ['eventName'],
+      isDirty: true,
+      sort: [],
+    },
+    metadata: {
+      indexPattern: index,
+      view: 'discover',
+    },
+  };
   const filters = query.split(',').map((q) => {
     const [k, v] = q.split('=', 2);
     return {
       $state: { store: 'appState' },
+      meta: { index },
       query: { match_phrase: { [k]: v } },
     };
   });
-  const _a = {
+  const _q = {
     filters,
     index,
     interval: 'auto',
     query: { language: 'kuery', query: '' },
     sort: [['timestamp', 'desc']],
   };
-  return `${baseUrl}?_g=${rison.encode(_g)}&_a=${rison.encode(_a)}`;
+  return `${baseUrl}?_g=${rison.encode(_g)}&_a=${rison.encode(_a)}&_q=${rison.encode(_q)}`;
 };
 
 export const registerHelpers = (handlebars: typeof Handlebars) => {
